@@ -60,13 +60,18 @@ function renderEvents() {
 async function addEvent(event) {
   event.preventDefault();
   try {
+    const isoDate = new Date(
+      new Date(addEventForm.date.value).toLocaleString("en-US", {
+        timeZone: "America/Chicago",
+      })
+    ).toISOString();
     const response = await fetch(API_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         name: addEventForm.name.value,
         description: addEventForm.description.value,
-        date: addEventForm.date.value,
+        date: isoDate,
         location: addEventForm.location.value,
       }),
     });
